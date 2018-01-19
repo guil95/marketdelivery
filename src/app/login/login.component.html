@@ -1,0 +1,63 @@
+<div class="bgBody">
+        
+  <div class="container d-flex h-100">
+      <div class="login col-lg-4 row align-self-center">
+            <form [formGroup]="formulario" (ngSubmit)="autenticar()">
+                <div class="row">
+                        <div class="col-12">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Endereço de email</label>
+                        <input 
+                            type="email"
+                            class="form-control"
+                            id="exampleInputEmail1"
+                            aria-describedby="emailHelp"
+                            placeholder="Endereço de e-mail"
+                            formControlName="email"    >
+                            <small class="form-text text-danger" *ngIf="(formulario.get('email').touched) && (formulario.get('email').invalid)">E-mail inválido</small>
+            
+                    </div>
+                </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            
+                            <label for="exampleInputPassword1">Senha</label>
+                            <input 
+                                type="password"
+                                class="form-control"
+                                id="exampleInputPassword1"
+                                placeholder="Senha"
+                                formControlName="senha">
+                                <small class="form-text text-danger" *ngIf="(formulario.get('senha').touched) && (formulario.get('senha').invalid)">Senha inválida</small>
+                                
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                        <div class="col-12">
+                    <div class="form-check" >
+                        <label class="form-check-label" for="exampleCheck1"><input type="checkbox" class="form-check-input" id="exampleCheck1"> Lembrar-me</label>
+                    </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Entrar</button>
+                  </div>
+                </div>
+                <small class="form-text text-danger" *ngIf="erro['msg'] != ''">{{erro['msg']}}</small>
+                <!-- <hr>
+                <div class="row">
+                    <p>Crie uma conta <a href="#"> Cadastre-se</a></p>
+                </div> -->
+                
+            </form>
+                     
+      </div>
+  </div>
+</div>
+
