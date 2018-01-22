@@ -1,3 +1,118 @@
-<p>
-  mercado works!
-</p>
+<div class="container">
+  <div class="main">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="card-title"><i class="fa fa-cart-plus"></i> Cadastro de Mercado</h5>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="formulario" id="formulario">
+          <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="descricaoMercado">Descrição *</label>
+                    <input 
+                      type="text"
+                      class="form-control"
+                      id="descricaoMercado"
+                      placeholder="Digite descrição mercado"
+                        >
+                  
+                  </div>
+              </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              <div class="form-group">
+                <label for="razaoSocial">Razão Social</label>
+                <input 
+                  type="text"
+                  class="form-control"
+                  id="razaoSocial"
+                  placeholder="Digite razão social"
+                  >
+              </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
+                  <label for="razaoSocial">Nome fantasia</label>
+                  <input 
+                    type="text"
+                    class="form-control"
+                    id="razaoSocial"
+                    placeholder="Digite nome fantasia"
+                    >
+                </div>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-6">
+                  <div class="form-group">
+                    <label for="nomeFansia">CNPJ/CPF*</label>
+                    <input 
+                      type="text"
+                      class="form-control"
+                      id="nomeFansia"
+                      placeholder="Digite CNPJ"
+                      >
+                  </div>
+                </div>
+              <div class="col-6">
+                <div class="form-group">
+                  <label for="inscricaoEstadual">Inscrição Estadual</label>
+                  <input 
+                    type="text"
+                    class="form-control"
+                    id="inscricaoEstadual"
+                    placeholder="Digite inscrição estadual"
+                    >
+                </div>
+              </div>
+              
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label for="enderecoMercado">Endereço *</label>
+                        <input 
+                          type="text"
+                          class="form-control"
+                          id="enderecoMercado"
+                          placeholder="Digite endereço mercado"
+                            >
+                      
+                      </div>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-6">
+                      <div class="form-group">
+                        <label for="telefoneMercado">Telefone</label>
+                        <input 
+                          type="text"
+                          class="form-control"
+                          id="telefoneMercado"
+                          placeholder="Digite Telefone"
+                          >
+                      </div>
+                    </div>
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label for="celularMercado">Celular</label>
+                      <input 
+                        type="text"
+                        class="form-control"
+                        id="celularMercado"
+                        placeholder="Digite celular"
+                        >
+                    </div>
+                  </div>
+                </div>
+            </form>
+      </div>
+      <div class="card-footer text-muted">
+        <button form="formulario" type="submit" class="btn btn-success">Salvar</button>
+        <button form="formulario" type="reset" class="btn btn-danger">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
