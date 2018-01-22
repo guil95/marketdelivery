@@ -10,4 +10,5 @@ export class Mercado{
         public telefone: string,
         public celular: string
     ){}
+
 }

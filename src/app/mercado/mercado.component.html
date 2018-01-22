@@ -5,10 +5,10 @@
         <h5 class="card-title"><i class="fa fa-cart-plus"></i> Cadastro de Mercado</h5>
       </div>
       <div class="card-body">
-          <div class="alert alert-danger" role="alert">
+          <!-- <div class="alert alert-danger" role="alert">
               Ao clicar em um mercado da lista, preencher os inputs com os valores do mercado selecionado, 
             inserir o id no campo hidden do formulario e enviar para a api com id, caso tenha o id enviar para /api/mercados/:id caso nao tenha enviar para /api/mercados 
-           </div>
+           </div> -->
            <div class="alert alert-danger" role="alert" *ngIf="erroSalvar">
               Erro ao salvar mercado, verifique os campos e preencha novamente
            </div>
@@ -76,6 +76,8 @@
                      
                       >
                       <small class="form-text text-danger" *ngIf="(formulario.get('cnpjCpf').touched) && (formulario.get('cnpjCpf').invalid)">Preencha este campo</small>
+                      <small class="form-text text-danger" *ngIf="erroCnpjCpf == false">CNPJ/CPF inválido</small>
+                      
                   </div>
                 </div>
               <div class="col-6">
@@ -104,7 +106,7 @@
                           formControlName="endereco" 
                           
                             >
-                            <small class="form-text text-danger" *ngIf="(formulario.get('endereco').touched) && (formulario.get('endereco').invalid)">E-mail inválido</small>
+                            <small class="form-text text-danger" *ngIf="(formulario.get('endereco').touched) && (formulario.get('endereco').invalid)">Preencha este campo</small>
                       
                       </div>
                   </div>
