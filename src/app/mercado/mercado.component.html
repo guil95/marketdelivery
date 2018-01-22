@@ -5,6 +5,9 @@
         <h5 class="card-title"><i class="fa fa-cart-plus"></i> Cadastro de Mercado</h5>
       </div>
       <div class="card-body">
+          <div class="alert alert-danger" role="alert">
+              Ao clicar em um mercado da lista, preencher os inoputs com os valores do mercado selecionado, verificar a possibilidade de fazer sem sql
+            inserir o id no campo hidden do formulario e enviar para a api com id, caso tenha o id enviar para /api/mercados/id caso nao tenha enviar para /api/mercados            </div>
         <form [formGroup]="formulario" id="formulario">
           <div class="row">
             <div class="col-12">
