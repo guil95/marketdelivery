@@ -10,7 +10,7 @@
             inserir o id no campo hidden do formulario e enviar para a api com id, caso tenha o id enviar para /api/mercados/:id caso nao tenha enviar para /api/mercados 
            </div>
            <div class="alert alert-danger" role="alert" *ngIf="erroSalvar">
-              <p>Erro ao salvar mercado, verifique os campos e preencha novamente</p>
+              Erro ao salvar mercado, verifique os campos e preencha novamente
            </div>
         <form [formGroup]="formulario" id="formulario" (ngSubmit)="saveMercado()">
             <input 
@@ -139,7 +139,7 @@
       </div>
       <div class="card-footer text-muted">
         <button form="formulario" type="submit" class="btn btn-success">Salvar</button>
-        <button form="formulario" type="reset" class="btn btn-danger">Cancelar</button>
+        <button form="formulario" type="reset" class="btn btn-danger" (click)="resetarForm()">Cancelar</button>
       </div>
     </div><br>
     <div id="accordion">

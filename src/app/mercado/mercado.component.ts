@@ -13,7 +13,7 @@ import { validateConfig } from '@angular/router/src/config';
 export class MercadoComponent implements OnInit {
 
   public mercados: Array<Mercado>
-  public erroSalvar: boolean
+  public erroSalvar: boolean = false
 
   constructor(private mercadoService: MercadoService) { }
 
@@ -97,7 +97,7 @@ export class MercadoComponent implements OnInit {
     this.formulario.get('cnpjCpf').markAsTouched()
     this.formulario.get('endereco').markAsTouched()
 
-    this.erroSalvar = this.formulario.status === 'INVALID'
+    this.erroSalvar = this.formulario.invalid
 
     if(this.erroSalvar === false){
       let mercado =   new Mercado(
@@ -122,7 +122,10 @@ export class MercadoComponent implements OnInit {
         )
       }
     }
+  }
 
-
+  public resetarForm():void{
+    this.formulario.reset()
+    this.erroSalvar = false
   }
 }
