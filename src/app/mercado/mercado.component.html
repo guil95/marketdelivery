@@ -7,8 +7,12 @@
       <div class="card-body">
           <div class="alert alert-danger" role="alert">
               Ao clicar em um mercado da lista, preencher os inputs com os valores do mercado selecionado, 
-            inserir o id no campo hidden do formulario e enviar para a api com id, caso tenha o id enviar para /api/mercados/:id caso nao tenha enviar para /api/mercados            </div>
-        <form [formGroup]="formulario" id="formulario">
+            inserir o id no campo hidden do formulario e enviar para a api com id, caso tenha o id enviar para /api/mercados/:id caso nao tenha enviar para /api/mercados 
+           </div>
+           <div class="alert alert-danger" role="alert" *ngIf="erroSalvar">
+              <p>Erro ao salvar mercado, verifique os campos e preencha novamente</p>
+           </div>
+        <form [formGroup]="formulario" id="formulario" (ngSubmit)="saveMercado()">
             <input 
             type="hidden"
             class="form-control"
@@ -25,8 +29,9 @@
                       class="form-control"
                       id="descricaoMercado"
                       placeholder="Digite descrição mercado"
-                      formControlName="descricao"   
-                        >
+                      formControlName="descricao"
+                    >
+                    <small class="form-text text-danger" *ngIf="(formulario.get('descricao').touched) && (formulario.get('descricao').invalid)">Preencha este campo</small> 
                   
                   </div>
               </div>
@@ -60,15 +65,17 @@
           <div class="row">
               <div class="col-6">
                   <div class="form-group">
-                    <label for="nomeFansia">CNPJ/CPF*</label>
+                    <label for="cnpjCpf">CNPJ/CPF*</label>
                     <input 
                       type="text"
                       class="form-control"
-                      id="nomeFansia"
+                      id="cnpjCpf"
                       placeholder="Digite CNPJ"
                       formControlName="email"   
                       formControlName="cnpjCpf" 
+                     
                       >
+                      <small class="form-text text-danger" *ngIf="(formulario.get('cnpjCpf').touched) && (formulario.get('cnpjCpf').invalid)">Preencha este campo</small>
                   </div>
                 </div>
               <div class="col-6">
@@ -95,7 +102,9 @@
                           id="enderecoMercado"
                           placeholder="Digite endereço mercado"
                           formControlName="endereco" 
+                          
                             >
+                            <small class="form-text text-danger" *ngIf="(formulario.get('endereco').touched) && (formulario.get('endereco').invalid)">E-mail inválido</small>
                       
                       </div>
                   </div>

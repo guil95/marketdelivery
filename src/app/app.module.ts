@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import  { ReactiveFormsModule } from '@angular/forms'
 import { RouterModule} from '@angular/router'
 import { ControlMenuService } from './services/control-menu.service'
+import { MercadoService } from './services/mercado.service'
 
 import { ROUTES } from './app.routes'
 
@@ -29,7 +30,7 @@ import { ConfiguracaoComponent } from './configuracao/configuracao.component';
     ReactiveFormsModule,
     RouterModule.forRoot(ROUTES)
   ],
-  providers: [ ControlMenuService ],
+  providers: [ ControlMenuService, MercadoService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {FormGroup, FormControl} from '@angular/forms'
 import { Validators } from '@angular/forms';
 import { Mercado } from '../models/mercado.model'
+import { MercadoService } from '../services/mercado.service'
+import { validateConfig } from '@angular/router/src/config';
 
 @Component({
   selector: 'app-mercado',
@@ -11,8 +13,9 @@ import { Mercado } from '../models/mercado.model'
 export class MercadoComponent implements OnInit {
 
   public mercados: Array<Mercado>
+  public erroSalvar: boolean
 
-  constructor() { }
+  constructor(private mercadoService: MercadoService) { }
 
   ngOnInit() {
     this.mercados = [
@@ -66,12 +69,12 @@ export class MercadoComponent implements OnInit {
 
   public formulario: FormGroup = new FormGroup({
     'codigo': new FormControl(null),
-    'descricao': new FormControl(null),
+    'descricao': new FormControl(null, Validators.required),
     'razaoSocial': new FormControl(null),
     'nomeFantasia': new FormControl(null),
-    'cnpjCpf': new FormControl(null),
+    'cnpjCpf': new FormControl(null, Validators.required),
     'inscricaoEstadual': new FormControl(null),
-    'endereco': new FormControl(null),
+    'endereco': new FormControl(null, Validators.required),
     'telefone': new FormControl(null),
     'celular': new FormControl(null)
   })
@@ -87,6 +90,39 @@ export class MercadoComponent implements OnInit {
     this.formulario.controls.telefone.setValue(mercado.telefone) 
     this.formulario.controls.celular.setValue(mercado.celular) 
     
-   console.log(this.formulario.value)
+  }
+
+  public saveMercado(){
+    this.formulario.get('descricao').markAsTouched()
+    this.formulario.get('cnpjCpf').markAsTouched()
+    this.formulario.get('endereco').markAsTouched()
+
+    this.erroSalvar = this.formulario.status === 'INVALID'
+
+    if(this.erroSalvar === false){
+      let mercado =   new Mercado(
+        this.formulario.value.codigo,
+        this.formulario.value.descricao,
+        this.formulario.value.razaoSocial,
+        this.formulario.value.nomeFantasia,
+        this.formulario.value.cnpjCpf,
+        this.formulario.value.inscricaoEstadual,
+        this.formulario.value.endereco,
+        this.formulario.value.telefone,
+        this.formulario.value.celular
+      )
+  
+      if(this.formulario.value.codigo != null){
+        this.mercadoService.editarMercado(
+          mercado
+        )
+      }else{
+        this.mercadoService.salvarMercado( 
+          mercado
+        )
+      }
+    }
+
+
   }
 }
