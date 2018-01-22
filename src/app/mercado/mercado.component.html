@@ -6,9 +6,16 @@
       </div>
       <div class="card-body">
           <div class="alert alert-danger" role="alert">
-              Ao clicar em um mercado da lista, preencher os inoputs com os valores do mercado selecionado, verificar a possibilidade de fazer sem sql
-            inserir o id no campo hidden do formulario e enviar para a api com id, caso tenha o id enviar para /api/mercados/id caso nao tenha enviar para /api/mercados            </div>
+              Ao clicar em um mercado da lista, preencher os inputs com os valores do mercado selecionado, 
+            inserir o id no campo hidden do formulario e enviar para a api com id, caso tenha o id enviar para /api/mercados/:id caso nao tenha enviar para /api/mercados            </div>
         <form [formGroup]="formulario" id="formulario">
+            <input 
+            type="hidden"
+            class="form-control"
+            id="idMercado"
+            formControlName="codigo" 
+            
+              >
           <div class="row">
             <div class="col-12">
                 <div class="form-group">
@@ -18,6 +25,7 @@
                       class="form-control"
                       id="descricaoMercado"
                       placeholder="Digite descrição mercado"
+                      formControlName="descricao"   
                         >
                   
                   </div>
@@ -32,6 +40,7 @@
                   class="form-control"
                   id="razaoSocial"
                   placeholder="Digite razão social"
+                  formControlName="razaoSocial"   
                   >
               </div>
             </div>
@@ -43,6 +52,7 @@
                     class="form-control"
                     id="razaoSocial"
                     placeholder="Digite nome fantasia"
+                    formControlName="nomeFantasia"   
                     >
                 </div>
               </div>
@@ -56,6 +66,8 @@
                       class="form-control"
                       id="nomeFansia"
                       placeholder="Digite CNPJ"
+                      formControlName="email"   
+                      formControlName="cnpjCpf" 
                       >
                   </div>
                 </div>
@@ -67,6 +79,7 @@
                     class="form-control"
                     id="inscricaoEstadual"
                     placeholder="Digite inscrição estadual"
+                    formControlName="inscricaoEstadual" 
                     >
                 </div>
               </div>
@@ -81,6 +94,7 @@
                           class="form-control"
                           id="enderecoMercado"
                           placeholder="Digite endereço mercado"
+                          formControlName="endereco" 
                             >
                       
                       </div>
@@ -95,6 +109,7 @@
                           class="form-control"
                           id="telefoneMercado"
                           placeholder="Digite Telefone"
+                          formControlName="telefone" 
                           >
                       </div>
                     </div>
@@ -106,6 +121,7 @@
                         class="form-control"
                         id="celularMercado"
                         placeholder="Digite celular"
+                        formControlName="celular" 
                         >
                     </div>
                   </div>
@@ -129,7 +145,7 @@
       
           <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
             <div class="card-body">
-                <table class="table table-striped">
+                <table class="table table-striped table-hover">
                     <thead>
                       <tr>
                         <th scope="col">#</th>
@@ -140,34 +156,13 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <th scope="row">1</th>
-                        <td>Mercado América</td>
-                        <td>16308837000132</td>
-                        <td>(44)3618-2122</td>
-                        <td>(44)99852-2122</td>
+                      <tr *ngFor="let mercado of mercados" (click)="editarMercado(mercado)" class="mercadoRow">
+                        <th scope="row">{{mercado.codigo}}</th>
+                        <td>{{mercado.descricao}}</td>
+                        <td>{{mercado.cnpjCpf}}</td>
+                        <td>{{mercado.telefone}}</td>
+                        <td>{{mercado.celular}}</td>
                       </tr>
-                      <tr>
-                          <th scope="row">2</th>
-                          <td>Mercado Planalto</td>
-                          <td>16308837000156</td>
-                          <td>(44)3618-2122</td>
-                          <td>(44)99852-2122</td>
-                      </tr>
-                      <tr>
-                          <th scope="row">3</th>
-                          <td>Mercado Pinelli</td>
-                          <td>16308837000132</td>
-                          <td>(44)3618-2122</td>
-                          <td>(44)99852-2122</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">4</th>
-                            <td>Mercado Bella vista</td>
-                            <td>16308837000132</td>
-                            <td>(44)3618-2122</td>
-                            <td>(44)99852-2122</td>
-                          </tr>
                     </tbody>
                   </table>
             </div>
