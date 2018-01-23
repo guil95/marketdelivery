@@ -127,7 +127,6 @@ export class MercadoComponent implements OnInit {
           }
         }else{
           this.erroSalvar = true
-          this.erroCnpjCpf = true
         }
       }
   }
@@ -135,6 +134,7 @@ export class MercadoComponent implements OnInit {
   public resetarForm():void{
     this.formulario.reset()
     this.erroSalvar = false
+    this.erroCnpjCpf = true
   }
 
 

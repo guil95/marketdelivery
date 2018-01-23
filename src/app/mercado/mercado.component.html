@@ -76,7 +76,7 @@
                      
                       >
                       <small class="form-text text-danger" *ngIf="(formulario.get('cnpjCpf').touched) && (formulario.get('cnpjCpf').invalid)">Preencha este campo</small>
-                      <small class="form-text text-danger" *ngIf="erroCnpjCpf == false">CNPJ/CPF inválido</small>
+                      <small class="form-text text-danger" *ngIf="(formulario.get('cnpjCpf').touched) && (erroCnpjCpf == false)">CNPJ/CPF inválido</small>
                       
                   </div>
                 </div>
