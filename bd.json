@@ -1,0 +1,49 @@
+{
+    "mercados": [
+      {
+        "codigo": 1,
+        "descricao": "Mercado América",
+        "razaoSocial": "Mercado América LTDA",
+        "nomeFantasia": "Mercado América",
+        "cnpjCpf": "16308837000132",
+        "inscricaoEstadual": "123456789",
+        "endereco": "Av. Fulano de tal Numero 123",
+        "telefone": "(44) 3641-2526",
+        "celular": "(44)99985-6522"   
+      },
+      {
+        "codigo": 2,
+        "descricao": "Mercado Pinelli",
+        "razaoSocial": "Mercado Pinelli LTDA",
+        "nomeFantasia": "Mercado Pinelli",
+        "cnpjCpf": "16308837000777",
+        "inscricaoEstadual": "123456789",
+        "endereco": "Av. Fulano de tal Numero 123",
+        "telefone": "(44) 3641-2825",
+        "celular": "(44)99985-3030"   
+      },
+      {
+        "codigo": 3,
+        "descricao": "Mercado Planalto",
+        "razaoSocial": "Mercado Planalto LTDA",
+        "nomeFantasia": "Mercado Planalto",
+        "cnpjCpf": "16308837000888",
+        "inscricaoEstadual": "123456789",
+        "endereco": "Av. Fulano de tal Numero 123",
+        "telefone": "(44) 3641-8745",
+        "celular": "(44)99985-1020"   
+      },
+      {
+        "codigo": 4,
+        "descricao": "Mercado Bella Vista",
+        "razaoSocial": "Mercado Bella Vista LTDA",
+        "nomeFantasia": "Mercado Bella Vista",
+        "cnpjCpf": "16308837000999",
+        "inscricaoEstadual": "123456789",
+        "endereco": "Av. Fulano de tal Numero 123",
+        "telefone": "(44) 3641-7854",
+        "celular": "(44)99985-1234"   
+      }
+
+    ]
+}
