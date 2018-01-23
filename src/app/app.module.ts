@@ -4,6 +4,7 @@ import  { ReactiveFormsModule } from '@angular/forms'
 import { RouterModule} from '@angular/router'
 import { ControlMenuService } from './services/control-menu.service'
 import { MercadoService } from './services/mercado.service'
+import { DataTablesModule } from 'angular-datatables'
 
 import { ROUTES } from './app.routes'
 
@@ -28,6 +29,7 @@ import { ConfiguracaoComponent } from './configuracao/configuracao.component';
   imports: [
     BrowserModule,
     ReactiveFormsModule,
+    DataTablesModule,
     RouterModule.forRoot(ROUTES)
   ],
   providers: [ ControlMenuService, MercadoService ],
