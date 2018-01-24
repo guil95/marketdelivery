@@ -22,6 +22,7 @@ export class MercadoComponent implements OnInit, AfterViewInit {
   public mercados: any
   public erroSalvar: boolean = false
   public erroCnpjCpf: boolean = true
+  
 
   //para utilização do datable dinamico
   dtOptions: DataTables.Settings = {};

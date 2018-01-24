@@ -22,3 +22,14 @@ button:hover{
     }
 
 }
+
+.navbar-light .navbar-brand{
+    color: #FFF !important;
+}
+
+.navbar-light .navbar-nav .nav-link{
+    color: #FFF;
+    &:hover{
+        color: #EEE;
+    }
+}

@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import  { ReactiveFormsModule } from '@angular/forms'
 import { RouterModule} from '@angular/router'
 
@@ -23,6 +23,9 @@ import { ConfiguracaoComponent } from './configuracao/configuracao.component';
 import { HttpModule } from '@angular/http';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
+import { registerLocaleData } from "@angular/common";
+import localePt from "@angular/common/locales/pt";
+registerLocaleData(localePt);
 
 
 @NgModule({
@@ -50,7 +53,11 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
       provide: HTTP_INTERCEPTORS,
       useClass: InterceptorHttp,
       multi: true,
-  }
+    },
+    {
+      provide: LOCALE_ID, 
+      useValue:'pt'
+    }
 ],
   bootstrap: [AppComponent]
 })
