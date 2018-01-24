@@ -1,6 +1,6 @@
 export class Mercado{
+    public id: number
     constructor(
-        public codigo: number,
         public descricao: string,
         public razaoSocial: string,
         public nomeFantasia: string,

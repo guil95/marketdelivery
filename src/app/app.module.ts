@@ -2,8 +2,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import  { ReactiveFormsModule } from '@angular/forms'
 import { RouterModule} from '@angular/router'
+
 import { ControlMenuService } from './services/control-menu.service'
+import { LoadingService } from './services/loading.service'
 import { MercadoService } from './services/mercado.service'
+
 import { DataTablesModule } from 'angular-datatables'
 
 import { ROUTES } from './app.routes'
@@ -19,6 +22,7 @@ import { UsuarioComponent } from './usuario/usuario.component';
 import { ConfiguracaoComponent } from './configuracao/configuracao.component';
 import { HttpModule } from '@angular/http';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+
 
 
 @NgModule({
@@ -41,6 +45,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
   providers: [ 
     ControlMenuService, 
     MercadoService,
+    LoadingService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: InterceptorHttp,

@@ -1,36 +1,53 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {FormGroup, FormControl} from '@angular/forms'
 import { Validators } from '@angular/forms';
 import { Mercado } from '../models/mercado.model'
 import { MercadoService } from '../services/mercado.service'
 import { validateConfig } from '@angular/router/src/config';
 import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
+import { AfterViewInit } from '@angular/core/src/metadata/lifecycle_hooks';
+import { ViewChildren } from '@angular/core/src/metadata/di';
+import { DataTableDirective } from 'angular-datatables';
 
 @Component({
   selector: 'app-mercado',
   templateUrl: './mercado.component.html',
   styleUrls: ['./mercado.component.css']
 })
-export class MercadoComponent implements OnInit {
+export class MercadoComponent implements OnInit, AfterViewInit {
 
+  @ViewChild(DataTableDirective) tabela: DataTableDirective;
+  
   public mercados: any
   public erroSalvar: boolean = false
   public erroCnpjCpf: boolean = true
 
-  constructor(private mercadoService: MercadoService) { }
+  //para utilização do datable dinamico
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject();
 
+  constructor(private mercadoService: MercadoService) { 
+    
+  }
+  
   ngOnInit() {
-    this.mercados = [];
-    this.mercadoService.buscarMercados().subscribe(ret => {
-      console.log(ret)
-      this.mercados = ret;
-    }, (err) => {
-      console.log(err)
-    })
+    //para utilizaao do datatable dinamico
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 10
+    };
+    this.buscarMercados();
   }
 
+  //para não utilização do datable dinamico
+  ngAfterViewInit(): void {
+      this.dtTrigger.next();
+
+  }
+  
   public formulario: FormGroup = new FormGroup({
-    'codigo': new FormControl(null),
+    'id': new FormControl(null),
     'descricao': new FormControl(null, Validators.required),
     'razaoSocial': new FormControl(null),
     'nomeFantasia': new FormControl(null),
@@ -42,7 +59,7 @@ export class MercadoComponent implements OnInit {
   })
 
   public editarMercado(mercado): void{
-    this.formulario.controls.codigo.setValue(mercado.codigo)
+    this.formulario.controls.id.setValue(mercado.id)
     this.formulario.controls.descricao.setValue(mercado.descricao)    
     this.formulario.controls.razaoSocial.setValue(mercado.razaoSocial) 
     this.formulario.controls.nomeFantasia.setValue(mercado.nomeFantasia) 
@@ -66,7 +83,6 @@ export class MercadoComponent implements OnInit {
         console.log(this.erroCnpjCpf)
         if(this.erroCnpjCpf == true){
           let mercado =   new Mercado(
-            this.formulario.value.codigo,
             this.formulario.value.descricao,
             this.formulario.value.razaoSocial,
             this.formulario.value.nomeFantasia,
@@ -77,14 +93,20 @@ export class MercadoComponent implements OnInit {
             this.formulario.value.celular
           )
       
-          if(this.formulario.value.codigo != null){
+          if(this.formulario.value.id != null){
+            mercado.id = this.formulario.value.id
             this.mercadoService.editarMercado(
               mercado
             )
           }else{
             this.mercadoService.salvarMercado( 
               mercado
-            )
+            ).subscribe(ret => {
+              console.log(ret)
+              this.buscarMercados();
+            }, (err) => {
+              console.log(err)
+            })
           }
         }else{
           this.erroSalvar = true
@@ -98,6 +120,22 @@ export class MercadoComponent implements OnInit {
     this.erroCnpjCpf = true
   }
 
+  public buscarMercados(){
+    this.mercadoService.buscarMercados().subscribe(ret => {
+      console.log(ret)
+      this.mercados = ret;
+      //para utilização do datable dinamico
+      this.tabela.dtInstance.then((dtInstance: DataTables.Api) => {
+        // Destroy the table first
+        dtInstance.destroy();
+        // Call the dtTrigger to rerender again
+        this.dtTrigger.next();
+      });
+      
+    }, (err) => {
+      console.log(err)
+    })
+  }
 
   public validarCNPJ(cnpj): boolean {
  

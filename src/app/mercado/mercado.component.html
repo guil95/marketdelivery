@@ -17,7 +17,7 @@
             type="hidden"
             class="form-control"
             id="idMercado"
-            formControlName="codigo" 
+            formControlName="id" 
             
               >
           <div class="row">
@@ -148,7 +148,7 @@
         <div class="card">
           <div class="card-header" id="headingOne">
            
-              <button class="btn btn-link col-12" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+              <button (clicl)="buscarMercados()" class="btn btn-link col-12" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
                 <h5 class="mb-0">Listar Mercados</h5>
               </button>
             
@@ -156,7 +156,7 @@
       
           <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
             <div class="card-body">
-                <table class="table table-striped table-hover" datatable>
+                <table #tabela class="table table-striped table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
                     <thead>
                       <tr>
                         <th scope="col">#</th>
@@ -168,7 +168,7 @@
                     </thead>
                     <tbody>
                       <tr *ngFor="let mercado of mercados" (click)="editarMercado(mercado)" class="mercadoRow">
-                        <th scope="row">{{mercado.codigo}}</th>
+                        <td>{{mercado.id}}</td>
                         <td>{{mercado.descricao}}</td>
                         <td>{{mercado.cnpjCpf}}</td>
                         <td>{{mercado.telefone}}</td>

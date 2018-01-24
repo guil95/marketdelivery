@@ -5,8 +5,8 @@
      height: 390px;
      /* box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22); */
      -webkit-box-shadow: 10px 10px 38px 0px rgba(0,0,0,0.75);
--moz-box-shadow: 10px 10px 38px 0px rgba(0,0,0,0.75);
-box-shadow: 10px 10px 38px 0px rgba(0,0,0,0.75);
+     -moz-box-shadow: 10px 10px 38px 0px rgba(0,0,0,0.75);
+     box-shadow: 10px 10px 38px 0px rgba(0,0,0,0.75);
      padding: 70px;
      border-radius: 10px;
      background: #FAFAFA;

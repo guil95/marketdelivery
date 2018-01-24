@@ -4,7 +4,8 @@ import { Observable } from "rxjs/Observable";
 import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/retry'
 import { Injectable } from "@angular/core";
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
 
 @Injectable()
 export class MercadoService {
@@ -13,25 +14,14 @@ constructor(
     private httpClient: HttpClient
 ){}
 
-   public salvarMercado(mercado: Mercado): void{
-    //post para /api/mercados
-    console.log(mercado)
-    // let headers: Headers = new Headers()
-    // headers.append('Content-type', 'application/json')
-    
-    //     return this.http.get(
-    //         URL_API_MERCADOS,
-    //         JSON.stringify(pedido),
-    //         new RequestOptions({
-    //             headers: headers
-    //         })  
-    //     )
-    //     .map((resposta: Response) => resposta.json().id)
+   public salvarMercado(mercado: Mercado): Observable<any>{
+       console.log(mercado)
+    return this.httpClient.post<any>(URL_API_MERCADOS, mercado)
    }
 
-   public editarMercado(mercado: Mercado): void{
+   public editarMercado(mercado: Mercado): Observable<any>{
     //put para /api/mercados/:id
-    console.log(mercado)
+    return this.httpClient.put<any>(URL_API_MERCADOS+'/'+mercado.id, mercado)
    }
 
    public buscarMercados() {

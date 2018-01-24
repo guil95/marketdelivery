@@ -6,3 +6,19 @@ button:hover{
     margin-top: 80px;
 
 }
+.loading{
+    
+    img{
+        // border-radius: 50%;
+        width: 200px;
+        height: 150px;
+        top: 50%;
+        left: 50%;
+        margin-left:-100px;
+        margin-top:-75px;
+        z-index: 999;
+        position: absolute;
+        
+    }
+
+}
