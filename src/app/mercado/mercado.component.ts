@@ -97,7 +97,12 @@ export class MercadoComponent implements OnInit, AfterViewInit {
             mercado.id = this.formulario.value.id
             this.mercadoService.editarMercado(
               mercado
-            )
+            ).subscribe(ret => {
+              console.log(ret)
+              this.buscarMercados();
+            }, (err) => {
+              console.log(err)
+            })
           }else{
             this.mercadoService.salvarMercado( 
               mercado
@@ -131,7 +136,7 @@ export class MercadoComponent implements OnInit, AfterViewInit {
         // Call the dtTrigger to rerender again
         this.dtTrigger.next();
       });
-      
+
     }, (err) => {
       console.log(err)
     })
