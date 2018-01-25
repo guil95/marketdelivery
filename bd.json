@@ -483,6 +483,47 @@
       "telefone": null,
       "celular": null,
       "id": 44
+    },
+    {
+      "descricao": "teste",
+      "razaoSocial": null,
+      "nomeFantasia": null,
+      "cnpjCpf": "32346385000130",
+      "inscricaoEstadual": null,
+      "endereco": "sdsd",
+      "telefone": null,
+      "celular": null,
+      "id": 45
+    },
+    {
+      "descricao": "testeasasasasasas",
+      "razaoSocial": null,
+      "nomeFantasia": null,
+      "cnpjCpf": "32346385000130",
+      "inscricaoEstadual": null,
+      "endereco": "sdsd",
+      "telefone": null,
+      "celular": null,
+      "id": 46
+    }
+  ],
+  "usuarios": [
+    {
+      "id": 1,
+      "nome": "string",
+      "mercado": 1,
+      "cpf": "00022255514"
+    },
+    {
+      "id": 2,
+      "nome": "Guilherme Rodrigues",
+      "mercado": "3",
+      "cpf": "09466330969",
+      "rg": null,
+      "telefone": null,
+      "celular": "44999816591",
+      "email": "gui@gui",
+      "senha": "133"
     }
   ]
 }

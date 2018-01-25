@@ -5,7 +5,7 @@ import { RouterModule} from '@angular/router'
 
 import { ControlMenuService } from './services/control-menu.service'
 import { LoadingService } from './services/loading.service'
-import { MercadoService } from './services/mercado.service'
+import { ValidformService } from './services/validform.service'
 
 import { DataTablesModule } from 'angular-datatables'
 
@@ -25,6 +25,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { registerLocaleData } from "@angular/common";
 import localePt from "@angular/common/locales/pt";
+import { CrudService } from './services/crud.service';
 registerLocaleData(localePt);
 
 
@@ -47,8 +48,9 @@ registerLocaleData(localePt);
   ],
   providers: [ 
     ControlMenuService, 
-    MercadoService,
     LoadingService,
+    ValidformService,
+    CrudService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: InterceptorHttp,

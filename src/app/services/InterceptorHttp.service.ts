@@ -27,13 +27,19 @@ export class InterceptorHttp implements HttpInterceptor {
             this.loading.mostrarLoading = false
         }).catch((err: HttpEvent<any>) => {
             if (err instanceof HttpErrorResponse) {
-                if ((<HttpErrorResponse> err).status == 404) {
-                    alert('Erro 404 , serviço não encontrado');
-                } else if ((<HttpErrorResponse> err).status == 403) {
-                    alert('Erro 403 Sua sessão foi expirada!');
-                } else if ((<HttpErrorResponse> err).status == 500) {
-                  console.log(err)
-                    alert("Erro 500!");
+                switch((<HttpErrorResponse> err).status ){
+                    case 404:
+                         alert('Erro 404 , serviço não encontrado');
+                    break
+                    case 403:
+                        alert('Erro 403 ');
+                    break
+                    case 500:
+                        alert('Erro 500 , serviço não encontrado');
+                    break
+                    default:
+                        alert('erro 400')
+                    break
                 }
             }
             this.loading.mostrarLoading = false

@@ -1,3 +1,177 @@
-<p>
-  usuario works!
-</p>
+<div class="container">
+  <div class="main">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="card-title"><i class="fa fa-user-plus"></i> Cadastro de Usuário</h5>
+      </div>
+      <div class="card-body">
+           <div class="alert alert-danger" role="alert" *ngIf="erroSalvar">
+              Erro ao salvar usuário, verifique os campos e preencha novamente
+           </div>
+        <form [formGroup]="formulario" id="formulario" (ngSubmit)="saveUsuario()">
+            <input 
+            type="hidden"
+            class="form-control"
+            id="idUsuario"
+            formControlName="id" 
+            
+              >
+          <div class="row">
+            <div class="col-6">
+                <div class="form-group">
+                    <label for="nomeUsuario">Nome Usuário *</label>
+                    <input 
+                      type="text"
+                      class="form-control"
+                      id="nomeUsuario"
+                      placeholder="Digite nome usuário"
+                      formControlName="nome"
+                    >
+                    <small class="form-text text-danger" *ngIf="(formulario.get('nome').touched) && (formulario.get('nome').invalid)">Preencha este campo</small> 
+                  
+                  </div>
+              </div>
+              <div class="col-6">
+                <div class="form-group">
+                  <label for="mercado">Mercado *</label>
+                  <select 
+                  class="form-control"
+                   id="mercado"
+                   formControlName="mercado">
+                    <option *ngFor="let mercado of mercados" [value]="mercado.id">{{mercado.descricao}}</option>
+                  </select>
+                  <small class="form-text text-danger" *ngIf="(formulario.get('mercado').touched) && (formulario.get('mercado').invalid)">Preencha este campo</small>
+                </div>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-6">
+                  <div class="form-group">
+                    <label for="cpf">CPF *</label>
+                    <input 
+                      type="text"
+                      class="form-control"
+                      id="cpf"
+                      placeholder="Digite CPF"  
+                      formControlName="cpf" 
+                     
+                      >
+                      <small class="form-text text-danger" *ngIf="(formulario.get('cpf').touched) && (formulario.get('cpf').invalid)">Preencha este campo</small>
+                      <small class="form-text text-danger" *ngIf="(formulario.get('cpf').touched) && (errocpf == false)">CPF inválido</small>
+                      
+                  </div>
+                </div>
+              <div class="col-6">
+                <div class="form-group">
+                  <label for="rg">RG</label>
+                  <input 
+                    type="text"
+                    class="form-control"
+                    id="rg"
+                    placeholder="Digite inscrição estadual"
+                    formControlName="rg" 
+                    >
+                </div>
+              </div>
+              
+            </div>
+              <div class="row">
+                  <div class="col-6">
+                      <div class="form-group">
+                        <label for="telefoneUsuario">Telefone</label>
+                        <input 
+                          type="text"
+                          class="form-control"
+                          id="telefoneUsuario"
+                          placeholder="Digite Telefone"
+                          formControlName="telefone" 
+                          >
+                      </div>
+                    </div>
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label for="celularUsuario">Celular *</label>
+                      <input 
+                        type="text"
+                        class="form-control"
+                        id="celularUsuario"
+                        placeholder="Digite celular"
+                        formControlName="celular" 
+                        >
+                        <small class="form-text text-danger" *ngIf="(formulario.get('celular').touched) && (formulario.get('celular').invalid)">Preencha este campo</small>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                      <div class="form-group">
+                        <label for="emailUsuario">E-mail *</label>
+                        <input 
+                          type="email"
+                          class="form-control"
+                          id="emailUsuario"
+                          placeholder="Digite E-mail"
+                          formControlName="email" 
+                          >
+                          <small class="form-text text-danger" *ngIf="(formulario.get('email').touched) && (formulario.get('email').invalid)">Preencha este campo</small>
+                      </div>
+                    </div>
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label for="senhaUsuario">Senha *</label>
+                      <input 
+                        type="password"
+                        class="form-control"
+                        id="senhaUsuario"
+                        placeholder="Digite Senha"
+                        formControlName="senha" 
+                        >
+                        <small class="form-text text-danger" *ngIf="(formulario.get('senha').touched) && (formulario.get('senha').invalid)">Preencha este campo</small>
+                    </div>
+                  </div>
+                </div>
+            </form>
+      </div>
+      <div class="card-footer text-muted">
+        <button form="formulario" type="submit" class="btn btn-success">Salvar</button>
+        <button form="formulario" type="reset" class="btn btn-danger" (click)="resetarForm()">Cancelar</button>
+      </div>
+    </div><br>
+    <div id="accordion">
+        <div class="card">
+          <div class="card-header" id="headingOne">
+              <button (click)="buscarUsuariosClick()" class="btn btn-link col-12" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                <h5 class="mb-0">Listar Usuários</h5>
+              </button> 
+          </div>
+      
+          <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+            <div class="card-body">
+                <table #tabela class="table table-striped table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">E-mail</th>
+                        <th scope="col">Mercado</th>
+                        <th scope="col">Telefone</th>
+                        <th scope="col">Celular</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let usuario of usuarios" (click)="editarUsuario(usuario)" class="usuarioRow">
+                        <td>{{usuario.id}}</td>
+                        <td>{{usuario.nome}}</td>
+                        <td>{{usuario.email}}</td>
+                        <td>{{usuario.mercado}}</td>
+                        <td>{{usuario.telefone}}</td>
+                        <td>{{usuario.celular}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>

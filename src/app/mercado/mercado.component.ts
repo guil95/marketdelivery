@@ -2,13 +2,17 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import {FormGroup, FormControl} from '@angular/forms'
 import { Validators } from '@angular/forms';
 import { Mercado } from '../models/mercado.model'
-import { MercadoService } from '../services/mercado.service'
 import { validateConfig } from '@angular/router/src/config';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { AfterViewInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { ViewChildren } from '@angular/core/src/metadata/di';
 import { DataTableDirective } from 'angular-datatables';
+
+import { ValidformService } from '../services/validform.service'
+import { CrudService } from '../services/crud.service'
+
+import { URL_API_MERCADOS } from '../app.api'
 
 @Component({
   selector: 'app-mercado',
@@ -22,13 +26,16 @@ export class MercadoComponent implements OnInit, AfterViewInit {
   public mercados: any
   public erroSalvar: boolean = false
   public erroCnpjCpf: boolean = true
-  
+  public buscarMercadosOpen: boolean = false
 
   //para utilização do datable dinamico
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
 
-  constructor(private mercadoService: MercadoService) { 
+  constructor(
+    private validFormService: ValidformService,
+    private crudService: CrudService
+  ) { 
     
   }
   
@@ -80,23 +87,15 @@ export class MercadoComponent implements OnInit, AfterViewInit {
     this.erroSalvar = this.formulario.invalid
 
     if(this.erroSalvar === false){
-        this.erroCnpjCpf = this.formulario.value.cnpjCpf.length > 11 ? this.validarCNPJ(this.formulario.value.cnpjCpf) : this.validarCpf(this.formulario.value.cnpjCpf)
+        this.erroCnpjCpf = this.formulario.value.cnpjCpf.length > 11 ? this.validFormService.validarCNPJ(this.formulario.value.cnpjCpf) : this.validFormService.validarCpf(this.formulario.value.cnpjCpf)
         console.log(this.erroCnpjCpf)
         if(this.erroCnpjCpf == true){
-          let mercado =   new Mercado(
-            this.formulario.value.descricao,
-            this.formulario.value.razaoSocial,
-            this.formulario.value.nomeFantasia,
-            this.formulario.value.cnpjCpf,
-            this.formulario.value.inscricaoEstadual,
-            this.formulario.value.endereco,
-            this.formulario.value.telefone,
-            this.formulario.value.celular
-          )
+          let mercado: Mercado = this.formulario.value;
       
           if(this.formulario.value.id != null){
             mercado.id = this.formulario.value.id
-            this.mercadoService.editarMercado(
+            this.crudService.put<Mercado>(
+              URL_API_MERCADOS+'/'+mercado.id,
               mercado
             ).subscribe(ret => {
               console.log(ret)
@@ -105,7 +104,11 @@ export class MercadoComponent implements OnInit, AfterViewInit {
               console.log(err)
             })
           }else{
-            this.mercadoService.salvarMercado( 
+            if(mercado.id == null){
+              delete mercado.id
+            }
+            this.crudService.post<Mercado>( 
+              URL_API_MERCADOS,
               mercado
             ).subscribe(ret => {
               console.log(ret)
@@ -127,7 +130,7 @@ export class MercadoComponent implements OnInit, AfterViewInit {
   }
 
   public buscarMercados(){
-    this.mercadoService.buscarMercados().subscribe(ret => {
+    this.crudService.get<Mercado[]>(URL_API_MERCADOS).subscribe(ret => {
       console.log(ret)
       this.mercados = ret;
       //para utilização do datable dinamico
@@ -143,78 +146,11 @@ export class MercadoComponent implements OnInit, AfterViewInit {
     })
   }
 
-  public validarCNPJ(cnpj): boolean {
- 
-    cnpj = cnpj.replace(/[^\d]+/g,'');
- 
-    if(cnpj == '') return false;
-     
-    if (cnpj.length != 14)
-        return false;
- 
-    // Elimina CNPJs invalidos conhecidos
-    if (cnpj == "00000000000000" || 
-        cnpj == "11111111111111" || 
-        cnpj == "22222222222222" || 
-        cnpj == "33333333333333" || 
-        cnpj == "44444444444444" || 
-        cnpj == "55555555555555" || 
-        cnpj == "66666666666666" || 
-        cnpj == "77777777777777" || 
-        cnpj == "88888888888888" || 
-        cnpj == "99999999999999")
-        return false;
-         
-    // Valida DVs
-    let tamanho = cnpj.length - 2
-    let numeros = cnpj.substring(0,tamanho);
-    let digitos = cnpj.substring(tamanho);
-    let soma = 0;
-    let pos = tamanho - 7;
-    for (let i = tamanho; i >= 1; i--) {
-      soma += numeros.charAt(tamanho - i) * pos--;
-      if (pos < 2)
-            pos = 9;
-    }
-    let resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
-    if (resultado != digitos.charAt(0))
-        return false;
-         
-    tamanho = tamanho + 1;
-    numeros = cnpj.substring(0,tamanho);
-    soma = 0;
-    pos = tamanho - 7;
-    for (let i = tamanho; i >= 1; i--) {
-      soma += numeros.charAt(tamanho - i) * pos--;
-      if (pos < 2)
-            pos = 9;
-    }
-    resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
-    if (resultado != digitos.charAt(1))
-          return false;
-           
-    return true;
-    
-}
+  public buscarMercadosClick(){
+    this.buscarMercadosOpen = !this.buscarMercadosOpen
 
-  public validarCpf(strCPF): boolean{
-    let Soma;
-      let Resto;
-      Soma = 0;
-    if (strCPF == "00000000000") return false;
-      
-    for (let i=1; i<=9; i++) Soma = Soma + parseInt(strCPF.substring(i-1, i)) * (11 - i);
-    Resto = (Soma * 10) % 11;
-    
-      if ((Resto == 10) || (Resto == 11))  Resto = 0;
-      if (Resto != parseInt(strCPF.substring(9, 10)) ) return false;
-    
-    Soma = 0;
-      for (let i = 1; i <= 10; i++) Soma = Soma + parseInt(strCPF.substring(i-1, i)) * (12 - i);
-      Resto = (Soma * 10) % 11;
-    
-      if ((Resto == 10) || (Resto == 11))  Resto = 0;
-      if (Resto != parseInt(strCPF.substring(10, 11) ) ) return false;
-      return true;
+    if(this.buscarMercadosOpen == true){
+      this.buscarMercados()
+    }
   }
 }

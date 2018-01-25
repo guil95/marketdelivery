@@ -1,14 +1,11 @@
-export class Mercado{
-    public id: number
-    constructor(
-        public descricao: string,
-        public razaoSocial: string,
-        public nomeFantasia: string,
-        public cnpjCpf: string,
-        public inscricaoEstadual: string,
-        public endereco: string,
-        public telefone: string,
-        public celular: string
-    ){}
-
+export interface Mercado{
+     id?: number
+     descricao: string,
+     razaoSocial: string,
+     nomeFantasia: string,
+     cnpjCpf: string,
+     inscricaoEstadual: string,
+     endereco: string,
+     telefone: string,
+     celular: string
 }
