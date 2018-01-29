@@ -58,10 +58,10 @@ export class InterceptorHttp implements HttpInterceptor {
                         if(error.hasOwnProperty('message')){
                             errorMessage = this.extractMessage(error['message'])
                         } 
-                        this.toast.error(errorMessage.join('<br>'), '',{
+                        this.toast.error(errorMessage.join('\n'), '',{
                             timeOut: 10000,
                           });
-                                    
+                          this.messages = []            
                     break;
                     default:
                            console.log((<HttpErrorResponse> err))                   
