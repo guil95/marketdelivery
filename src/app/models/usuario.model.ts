@@ -7,7 +7,8 @@ export interface Usuario{
     telefone: string,
     celular: string,
     email: string,
-    senha: string
+    senha: string,
+    mercadoDescricao?: string
 
 
 }

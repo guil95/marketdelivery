@@ -524,6 +524,17 @@
       "celular": "44999816591",
       "email": "gui@gui",
       "senha": "133"
+    },
+    {
+      "nome": "Guilherme ",
+      "mercado": "2",
+      "cpf": "09466330969",
+      "rg": null,
+      "telefone": null,
+      "celular": "44999816591",
+      "email": "gui@123.com",
+      "senha": "dssdsd",
+      "id": 3
     }
   ]
 }

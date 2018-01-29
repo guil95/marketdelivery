@@ -6,11 +6,11 @@ import { validateConfig } from '@angular/router/src/config';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { AfterViewInit } from '@angular/core/src/metadata/lifecycle_hooks';
-import { ViewChildren } from '@angular/core/src/metadata/di';
 import { DataTableDirective } from 'angular-datatables';
 
 import { ValidformService } from '../services/validform.service'
 import { CrudService } from '../services/crud.service'
+
 
 import { URL_API_MERCADOS } from '../app.api'
 
@@ -45,7 +45,6 @@ export class MercadoComponent implements OnInit, AfterViewInit {
       pagingType: 'full_numbers',
       pageLength: 10
     };
-    this.buscarMercados();
   }
 
   //para não utilização do datable dinamico
@@ -88,20 +87,17 @@ export class MercadoComponent implements OnInit, AfterViewInit {
 
     if(this.erroSalvar === false){
         this.erroCnpjCpf = this.formulario.value.cnpjCpf.length > 11 ? this.validFormService.validarCNPJ(this.formulario.value.cnpjCpf) : this.validFormService.validarCpf(this.formulario.value.cnpjCpf)
-        console.log(this.erroCnpjCpf)
         if(this.erroCnpjCpf == true){
           let mercado: Mercado = this.formulario.value;
-      
           if(this.formulario.value.id != null){
             mercado.id = this.formulario.value.id
             this.crudService.put<Mercado>(
               URL_API_MERCADOS+'/'+mercado.id,
               mercado
             ).subscribe(ret => {
-              console.log(ret)
               this.buscarMercados();
+              // console.log(ret)
             }, (err) => {
-              console.log(err)
             })
           }else{
             if(mercado.id == null){
@@ -111,10 +107,10 @@ export class MercadoComponent implements OnInit, AfterViewInit {
               URL_API_MERCADOS,
               mercado
             ).subscribe(ret => {
-              console.log(ret)
               this.buscarMercados();
+              // console.log(ret)
             }, (err) => {
-              console.log(err)
+
             })
           }
         }else{
@@ -131,8 +127,8 @@ export class MercadoComponent implements OnInit, AfterViewInit {
 
   public buscarMercados(){
     this.crudService.get<Mercado[]>(URL_API_MERCADOS).subscribe(ret => {
-      console.log(ret)
-      this.mercados = ret;
+
+      this.mercados = ret['data']
       //para utilização do datable dinamico
       this.tabela.dtInstance.then((dtInstance: DataTables.Api) => {
         // Destroy the table first

@@ -6,7 +6,8 @@
       </div>
       <div class="card-body">
            <div class="alert alert-danger" role="alert" *ngIf="erroSalvar">
-              Erro ao salvar usuário, verifique os campos e preencha novamente
+              Erro ao salvar usuário, verifique os campos e preencha novamente<br>
+            
            </div>
         <form [formGroup]="formulario" id="formulario" (ngSubmit)="saveUsuario()">
             <input 
@@ -57,7 +58,7 @@
                      
                       >
                       <small class="form-text text-danger" *ngIf="(formulario.get('cpf').touched) && (formulario.get('cpf').invalid)">Preencha este campo</small>
-                      <small class="form-text text-danger" *ngIf="(formulario.get('cpf').touched) && (errocpf == false)">CPF inválido</small>
+                      <small class="form-text text-danger" *ngIf="(formulario.get('cpf').touched) && (erroCpf == false)">CPF inválido</small>
                       
                   </div>
                 </div>
@@ -154,7 +155,6 @@
                         <th scope="col">Nome</th>
                         <th scope="col">E-mail</th>
                         <th scope="col">Mercado</th>
-                        <th scope="col">Telefone</th>
                         <th scope="col">Celular</th>
                       </tr>
                     </thead>
@@ -163,8 +163,7 @@
                         <td>{{usuario.id}}</td>
                         <td>{{usuario.nome}}</td>
                         <td>{{usuario.email}}</td>
-                        <td>{{usuario.mercado}}</td>
-                        <td>{{usuario.telefone}}</td>
+                        <td>{{usuario.mercadoDescricao}}</td> 
                         <td>{{usuario.celular}}</td>
                       </tr>
                     </tbody>

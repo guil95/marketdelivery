@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ValidformService } from '../services/validform.service'
@@ -6,6 +6,10 @@ import { Usuario } from  '../models/usuario.model'
 import { Mercado } from  '../models/mercado.model'
 import { CrudService } from '../services/crud.service';
 import { URL_API_MERCADOS, URL_API_USUARIOS } from '../app.api';
+import { DataTableDirective } from 'angular-datatables';
+
+
+
 
 
 @Component({
@@ -14,6 +18,9 @@ import { URL_API_MERCADOS, URL_API_USUARIOS } from '../app.api';
   styleUrls: ['./usuario.component.css']
 })
 export class UsuarioComponent implements OnInit {
+
+
+  @ViewChild(DataTableDirective) tabela: DataTableDirective;
 
   public mercados: Mercado[]
   public usuarios: Array<Usuario>
@@ -62,16 +69,31 @@ export class UsuarioComponent implements OnInit {
   public buscarMercados(){
     this.crudService.get<Mercado[]>(URL_API_MERCADOS).subscribe(ret => {
       console.log(ret)
-      this.mercados = ret;
+      this.mercados = ret['data'];
     }, (err) => {
       console.log(err)
     })
   }
 
   public buscarUsuarios(){
-    this.crudService.get<Usuario[]>(URL_API_USUARIOS).subscribe(ret => {
+    this.crudService.get<Usuario[]>(URL_API_USUARIOS).subscribe(usuariosRet => {
+      
+      usuariosRet.forEach((usuario)=>{
+        this.mercados.forEach((mercado)=>{
+          if(mercado.id == usuario.mercado){
+            usuario.mercadoDescricao = mercado.descricao
+          }
+        })
+      })
+      this.usuarios = usuariosRet;
 
-      this.usuarios = ret;
+        //para utilização do datable dinamico
+      this.tabela.dtInstance.then((dtInstance: DataTables.Api) => {
+        // Destroy the table first
+        dtInstance.destroy();
+        // Call the dtTrigger to rerender again
+        this.dtTrigger.next();
+      });
     }, (err) => {
       console.log(err)
     })

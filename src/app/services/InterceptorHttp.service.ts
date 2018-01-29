@@ -3,18 +3,25 @@ import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse, Http
 import {Observable} from 'rxjs';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
+import { ToastrService } from 'ngx-toastr';
 
 import { LoadingService } from './loading.service'
+
 
 
 
 @Injectable()
 export class InterceptorHttp implements HttpInterceptor {
 
-    constructor( private loading: LoadingService) {
+    public messages: Array<any> = []
+
+    constructor( 
+        private loading: LoadingService,
+        private toast: ToastrService
+    ) {
     }
 
-    intercept(req: HttpRequest<any>, next: HttpHandler): any {
+    public intercept(req: HttpRequest<any>, next: HttpHandler): any {
 
         this.loading.mostrarLoading = true
         
@@ -25,6 +32,14 @@ export class InterceptorHttp implements HttpInterceptor {
 
         return next.handle(req).do((event: HttpEvent<any>) => {
             this.loading.mostrarLoading = false
+            if(event.hasOwnProperty("body")){
+                if(event['body'].hasOwnProperty("message")){
+                    this.toast.success(event['body'].message, '');
+                    
+                }
+            }
+            
+          
         }).catch((err: HttpEvent<any>) => {
             if (err instanceof HttpErrorResponse) {
                 switch((<HttpErrorResponse> err).status ){
@@ -37,8 +52,19 @@ export class InterceptorHttp implements HttpInterceptor {
                     case 500:
                         alert('Erro 500 , serviço não encontrado');
                     break
+                    case 400:
+                        let error = (<HttpErrorResponse> err).error
+                        let errorMessage: Array<any> = []
+                        if(error.hasOwnProperty('message')){
+                            errorMessage = this.extractMessage(error['message'])
+                        } 
+                        this.toast.error(errorMessage.join('<br>'), '',{
+                            timeOut: 10000,
+                          });
+                                    
+                    break;
                     default:
-                        alert('erro 400')
+                           console.log((<HttpErrorResponse> err))                   
                     break
                 }
             }
@@ -46,4 +72,15 @@ export class InterceptorHttp implements HttpInterceptor {
             return Observable.throw(err);
         });
     }
+
+    public extractMessage(msg) {
+        for (const field in msg) {
+            if(typeof msg[field] === 'object'){
+              this.extractMessage(msg[field])
+            }else{
+                this.messages.push(msg[field]);
+            }
+        }
+        return this.messages;
+      }
 }
