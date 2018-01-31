@@ -31,7 +31,11 @@ export class InterceptorHttp implements HttpInterceptor {
 
 
         return next.handle(req).do((event: HttpEvent<any>) => {
-            this.loading.mostrarLoading = false
+            console.log(event)
+            if(event.type != 0){
+                this.loading.mostrarLoading = false
+            }
+            
             if(event.hasOwnProperty("body")){
                 if(event['body'].hasOwnProperty("message")){
                     this.toast.success(event['body'].message, '');
@@ -44,13 +48,19 @@ export class InterceptorHttp implements HttpInterceptor {
             if (err instanceof HttpErrorResponse) {
                 switch((<HttpErrorResponse> err).status ){
                     case 404:
-                         alert('Erro 404 , serviço não encontrado');
+                        this.toast.error("Erro conexão com servidor 404", '',{
+                            timeOut: 10000,
+                        })
                     break
                     case 403:
-                        alert('Erro 403 ');
+                        this.toast.error("Erro conexão com servidor 403", '',{
+                            timeOut: 10000,
+                        })
                     break
                     case 500:
-                        alert('Erro 500 , serviço não encontrado');
+                        this.toast.error("Erro conexão com servidor 500", '',{
+                            timeOut: 10000,
+                        })
                     break
                     case 400:
                         let error = (<HttpErrorResponse> err).error
@@ -62,9 +72,11 @@ export class InterceptorHttp implements HttpInterceptor {
                             timeOut: 10000,
                           });
                           this.messages = []            
-                    break;
+                    break
                     default:
-                           console.log((<HttpErrorResponse> err))                   
+                    this.toast.error("Erro conexão com servidor", '',{
+                        timeOut: 10000,
+                      })                
                     break
                 }
             }
