@@ -1,11 +1,9 @@
-import {Injectable} from '@angular/core';
+import {Injectable, EventEmitter} from '@angular/core';
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse, HttpErrorResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
 import { ToastrService } from 'ngx-toastr';
-
-import { LoadingService } from './loading.service'
 
 
 
@@ -14,16 +12,16 @@ import { LoadingService } from './loading.service'
 export class InterceptorHttp implements HttpInterceptor {
 
     public messages: Array<any> = []
-
+    static mostrarLoading = new EventEmitter();
     constructor( 
-        private loading: LoadingService,
         private toast: ToastrService
     ) {
     }
 
     public intercept(req: HttpRequest<any>, next: HttpHandler): any {
 
-        this.loading.mostrarLoading = true
+        console.log('mostrar loading')
+        InterceptorHttp.mostrarLoading.emit(true)
         
         if (!req.headers.has('Content-Type')) {
             req = req.clone({headers: req.headers.set('Content-Type', 'application/json')});
@@ -31,9 +29,10 @@ export class InterceptorHttp implements HttpInterceptor {
 
 
         return next.handle(req).do((event: HttpEvent<any>) => {
-            console.log(event)
+
             if(event.type != 0){
-                this.loading.mostrarLoading = false
+                InterceptorHttp.mostrarLoading.emit(false)
+                console.log('esconder loading')
             }
             
             if(event.hasOwnProperty("body")){
@@ -51,16 +50,19 @@ export class InterceptorHttp implements HttpInterceptor {
                         this.toast.error("Erro conexão com servidor 404", '',{
                             timeOut: 10000,
                         })
+                        InterceptorHttp.mostrarLoading.emit(false)
                     break
                     case 403:
                         this.toast.error("Erro conexão com servidor 403", '',{
                             timeOut: 10000,
                         })
+                        InterceptorHttp.mostrarLoading.emit(false)
                     break
                     case 500:
                         this.toast.error("Erro conexão com servidor 500", '',{
                             timeOut: 10000,
                         })
+                        InterceptorHttp.mostrarLoading.emit(false)
                     break
                     case 400:
                         let error = (<HttpErrorResponse> err).error
@@ -71,7 +73,8 @@ export class InterceptorHttp implements HttpInterceptor {
                         this.toast.error(errorMessage.join('\n'), '',{
                             timeOut: 10000,
                           });
-                          this.messages = []            
+                          this.messages = []  
+                          InterceptorHttp.mostrarLoading.emit(false)         
                     break
                     default:
                     this.toast.error("Erro conexão com servidor", '',{
@@ -80,7 +83,7 @@ export class InterceptorHttp implements HttpInterceptor {
                     break
                 }
             }
-            this.loading.mostrarLoading = false
+           
             return Observable.throw(err);
         });
     }

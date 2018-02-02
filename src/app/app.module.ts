@@ -6,7 +6,7 @@ import { ToastrModule, ToastContainerModule } from 'ngx-toastr';
 
 
 import { ControlMenuService } from './services/control-menu.service'
-import { LoadingService } from './services/loading.service'
+
 import { ValidformService } from './services/validform.service'
 
 
@@ -54,7 +54,6 @@ registerLocaleData(localePt);
   ],
   providers: [ 
     ControlMenuService, 
-    LoadingService,
     ValidformService,
     CrudService,
     {

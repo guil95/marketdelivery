@@ -77,15 +77,16 @@ export class UsuarioComponent implements OnInit {
 
   public buscarUsuarios(){
     this.crudService.get<Usuario[]>(URL_API_USUARIOS).subscribe(usuariosRet => {
+      let usuarios = usuariosRet['data']
       
-      usuariosRet.forEach((usuario)=>{
+      usuarios.forEach((usuario)=>{
         this.mercados.forEach((mercado)=>{
           if(mercado.id == usuario.mercado){
             usuario.mercadoDescricao = mercado.descricao
           }
         })
       })
-      this.usuarios = usuariosRet;
+      this.usuarios = usuarios;
 
         //para utilização do datable dinamico
       this.tabela.dtInstance.then((dtInstance: DataTables.Api) => {
