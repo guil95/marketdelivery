@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ValidformService } from '../services/validform.service'
-import { Usuario } from  '../models/usuario.model'
-import { Mercado } from  '../models/mercado.model'
-import { CrudService } from '../services/crud.service';
-import { URL_API_MERCADOS, URL_API_USUARIOS } from '../app.api';
+import { ValidformService } from '../../services/validform.service'
+import { Usuario } from  '../../models/usuario.model'
+import { Mercado } from  '../../models/mercado.model'
+import { CrudService } from '../../services/crud.service';
+import { URL_API_MERCADOS, URL_API_USUARIOS } from '../../app.api';
 import { DataTableDirective } from 'angular-datatables';
 
 

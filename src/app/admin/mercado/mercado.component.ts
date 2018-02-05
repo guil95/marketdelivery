@@ -1,18 +1,18 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {FormGroup, FormControl} from '@angular/forms'
 import { Validators } from '@angular/forms';
-import { Mercado } from '../models/mercado.model'
+import { Mercado } from '../../models/mercado.model'
 import { validateConfig } from '@angular/router/src/config';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { AfterViewInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { DataTableDirective } from 'angular-datatables';
 
-import { ValidformService } from '../services/validform.service'
-import { CrudService } from '../services/crud.service'
+import { ValidformService } from '../../services/validform.service'
+import { CrudService } from '../../services/crud.service'
 
 
-import { URL_API_MERCADOS } from '../app.api'
+import { URL_API_MERCADOS } from '../../app.api'
 
 @Component({
   selector: 'app-mercado',
