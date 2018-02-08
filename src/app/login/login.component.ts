@@ -6,18 +6,19 @@ import { ControlMenuService } from '../services/control-menu.service'
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
   public erro: Array<any> = []
-
+  public randomClass: any
   constructor(private controlMenu: ControlMenuService) {
     this.controlMenu.mostrarMenu = false
    }
 
   ngOnInit() {
     this.erro['msg'] = ''
-   
+    let random = Math.floor(Math.random() * 3) + 1
+    this.randomClass = "bgBody" + random
   }
 
   public formulario: FormGroup = new FormGroup({

@@ -1,0 +1,51 @@
+
+ .login{
+     background-color: rgba(50,50,50,0.5);
+     padding-bottom: 100px;
+     height: 390px;
+     /* box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22); */
+     -webkit-box-shadow: 10px 10px 38px 0px rgba(0,0,0,0.75);
+     -moz-box-shadow: 10px 10px 38px 0px rgba(0,0,0,0.75);
+     box-shadow: 10px 10px 38px 0px rgba(0,0,0,0.75);
+     padding: 70px;
+     border-radius: 10px;
+     color: #FFF;
+     margin: 0 auto; 
+
+ }
+
+//  $randomNumber: random(3);
+
+//  .bgBody{
+//     background-image: url(" ../../assets/mercado"+$randomNumber+".gif");
+//      background-size: cover; 
+//      background-repeat: no-repeat; 
+//      background-position: center; 
+//      height: 100vh;
+//  }
+
+
+ .bgBody1{
+    background-image: url(" ../../assets/mercado1.gif");
+     background-size: cover; 
+     background-repeat: no-repeat; 
+     background-position: center; 
+     height: 100vh;
+ }
+
+ .bgBody2{
+    background-image: url(" ../../assets/mercado2.gif");
+     background-size: cover; 
+     background-repeat: no-repeat; 
+     background-position: center; 
+     height: 100vh;
+ }
+
+ .bgBody3{
+    background-image: url(" ../../assets/mercado3.gif");
+     background-size: cover; 
+     background-repeat: no-repeat; 
+     background-position: center; 
+     height: 100vh;
+ }
+ 
