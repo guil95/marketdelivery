@@ -1,3 +1,4 @@
+import { AuthService } from './auth.service';
 import { LoginComponent } from './login.component';
 import { HttpModule } from '@angular/http';
 import { InterceptorHttp } from './../services/InterceptorHttp.service';
@@ -7,6 +8,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginRoutingModule } from './login.routing.module';
+import { AuthGuard } from '../guards/auth.guard';
 
 @NgModule({
   imports: [
@@ -22,6 +24,7 @@ import { LoginRoutingModule } from './login.routing.module';
    LoginComponent
   ],
   providers: [
+
     {
       provide: HTTP_INTERCEPTORS,
       useClass: InterceptorHttp,

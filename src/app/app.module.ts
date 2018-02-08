@@ -1,3 +1,6 @@
+import { AuthService } from './login/auth.service';
+import { AuthGuard } from './guards/auth.guard';
+
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, LOCALE_ID } from '@angular/core';
 import  { ReactiveFormsModule } from '@angular/forms'
@@ -49,6 +52,8 @@ registerLocaleData(localePt);
   providers: [ 
     ControlMenuService, 
     ValidformService,
+    AuthService,
+    AuthGuard,
     CrudService,
     {
       provide: HTTP_INTERCEPTORS,

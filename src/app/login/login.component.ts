@@ -1,7 +1,9 @@
+import { Usuario } from './../models/usuario.model';
 import { Component, OnInit } from '@angular/core';
 import {FormGroup, FormControl} from '@angular/forms'
 import { Validators } from '@angular/forms';
-import { ControlMenuService } from '../services/control-menu.service'
+import { AuthService } from './auth.service';
+
 
 @Component({
   selector: 'app-login',
@@ -9,10 +11,15 @@ import { ControlMenuService } from '../services/control-menu.service'
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+
   public erro: Array<any> = []
   public randomClass: any
-  constructor(private controlMenu: ControlMenuService) {
-    this.controlMenu.mostrarMenu = false
+  
+
+  constructor(
+    private authService: AuthService
+  ) {
+   
    }
 
   ngOnInit() {
@@ -37,5 +44,12 @@ export class LoginComponent implements OnInit {
     if(this.erro['senha'] == true || this.erro['email'] == true){
       this.erro['msg'] = 'Preencha os campos corretamente!!'
     }
+
+    this.authService.autenticar({
+        login : this.formulario.get('email').value,
+        senha : this.formulario.get('senha').value
+    })
+
+    
   }
 }
