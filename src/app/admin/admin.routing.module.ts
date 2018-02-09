@@ -1,3 +1,4 @@
+import { AuthGuard } from './../guards/auth.guard';
 import { AdminComponent } from './admin.component';
 import { NgModule } from '@angular/core';
 
@@ -13,19 +14,23 @@ export const ROUTES: Routes = [
         children:[
             { 
                 path: 'usuario', 
-                component: UsuarioComponent
+                loadChildren: "app/admin/usuario/usuario.module#UsuarioModule", 
+                canActivate: [ AuthGuard ]
             },
             { 
                 path: 'mercado', 
-                loadChildren: "app/admin/mercado/mercado.module#MercadoModule" 
+                loadChildren: "app/admin/mercado/mercado.module#MercadoModule", 
+                canActivate: [ AuthGuard ]
             },
             { 
                 path: 'configuracao', 
-                loadChildren: "app/admin/configuracao/configuracao.module#ConfiguracaoModule"  
+                loadChildren: "app/admin/configuracao/configuracao.module#ConfiguracaoModule", 
+                canActivate: [ AuthGuard ]
             },
             { 
                 path: 'home', 
-                loadChildren: "app/admin/home/home.module#HomeModule"  
+                loadChildren: "app/admin/home/home.module#HomeModule",
+                canActivate: [ AuthGuard ]  
             },
             { 
                 path: '',

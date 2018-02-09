@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Usuario } from './../models/usuario.model';
 import { Component, OnInit } from '@angular/core';
 import {FormGroup, FormControl} from '@angular/forms'
@@ -17,15 +18,20 @@ export class LoginComponent implements OnInit {
   
 
   constructor(
-    private authService: AuthService
+    private authService: AuthService,
+    private route: Router
   ) {
-   
+    
+    if(localStorage.getItem('token')){
+      this.route.navigate(['/admin'])
+    }
    }
 
   ngOnInit() {
     this.erro['msg'] = ''
     let random = Math.floor(Math.random() * 3) + 1
     this.randomClass = "bgBody" + random
+
   }
 
   public formulario: FormGroup = new FormGroup({

@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import {Injectable, EventEmitter} from '@angular/core';
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse, HttpErrorResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
@@ -14,17 +15,26 @@ export class InterceptorHttp implements HttpInterceptor {
     public messages: Array<any> = []
     static mostrarLoading = new EventEmitter();
     constructor( 
-        private toast: ToastrService
+        private toast: ToastrService,
+        private router: Router
     ) {
     }
 
     public intercept(req: HttpRequest<any>, next: HttpHandler): any {
 
-        console.log('mostrar loading')
+   
         InterceptorHttp.mostrarLoading.emit(true)
         
         if (!req.headers.has('Content-Type')) {
             req = req.clone({headers: req.headers.set('Content-Type', 'application/json')});
+        }
+
+        if (localStorage.getItem('token')) {
+            req = req.clone(
+                {
+                    headers: req.headers.set('Authorization', 'Bearer ' + localStorage.getItem('token'))
+                }
+            );
         }
 
 
@@ -32,7 +42,7 @@ export class InterceptorHttp implements HttpInterceptor {
 
             if(event.type != 0){
                 InterceptorHttp.mostrarLoading.emit(false)
-                console.log('esconder loading')
+                
             }
             
             if(event.hasOwnProperty("body")){
@@ -45,7 +55,15 @@ export class InterceptorHttp implements HttpInterceptor {
           
         }).catch((err: HttpEvent<any>) => {
             if (err instanceof HttpErrorResponse) {
+                console.log((<HttpErrorResponse> err))
                 switch((<HttpErrorResponse> err).status ){
+                    
+                    case 401:
+                        this.toast.error("Sem autorização 401", '',{
+                            timeOut: 10000,
+                        })
+                        InterceptorHttp.mostrarLoading.emit(false)
+                    break
                     case 404:
                         this.toast.error("Erro conexão com servidor 404", '',{
                             timeOut: 10000,
@@ -53,15 +71,17 @@ export class InterceptorHttp implements HttpInterceptor {
                         InterceptorHttp.mostrarLoading.emit(false)
                     break
                     case 403:
-                        this.toast.error("Erro conexão com servidor 403", '',{
-                            timeOut: 10000,
-                        })
+                        // this.toast.error("Erro conexão com servidor 403", '',{
+                        //     timeOut: 10000,
+                        // })
+                        this.router.navigateByUrl('login'); 
                         InterceptorHttp.mostrarLoading.emit(false)
                     break
                     case 500:
                         this.toast.error("Erro conexão com servidor 500", '',{
                             timeOut: 10000,
                         })
+                        this.router.navigateByUrl('login'); 
                         InterceptorHttp.mostrarLoading.emit(false)
                     break
                     case 400:
@@ -77,9 +97,11 @@ export class InterceptorHttp implements HttpInterceptor {
                           InterceptorHttp.mostrarLoading.emit(false)         
                     break
                     default:
-                    this.toast.error("Erro conexão com servidor", '',{
-                        timeOut: 10000,
-                      })                
+                        // this.toast.error("Erro conexão com servidor", '',{
+                        //     timeOut: 10000,
+                        // })   
+                    this.router.navigateByUrl('login');      
+                      InterceptorHttp.mostrarLoading.emit(false)       
                     break
                 }
             }

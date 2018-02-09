@@ -2,7 +2,7 @@ import { AuthService } from './login/auth.service';
 import { AuthGuard } from './guards/auth.guard';
 
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, LOCALE_ID } from '@angular/core';
+import { NgModule, LOCALE_ID, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import  { ReactiveFormsModule } from '@angular/forms'
 import { RouterModule} from '@angular/router'
 import { ToastrModule, ToastContainerModule } from 'ngx-toastr';
@@ -29,6 +29,7 @@ import { registerLocaleData } from "@angular/common";
 import localePt from "@angular/common/locales/pt";
 import { CrudService } from './services/crud.service';
 import { AppRoutingModule } from './app.routing.module';
+
 
 registerLocaleData(localePt);
 
@@ -65,6 +66,7 @@ registerLocaleData(localePt);
       useValue:'pt'
     }
 ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

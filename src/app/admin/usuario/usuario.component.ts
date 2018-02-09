@@ -5,7 +5,7 @@ import { ValidformService } from '../../services/validform.service'
 import { Usuario } from  '../../models/usuario.model'
 import { Mercado } from  '../../models/mercado.model'
 import { CrudService } from '../../services/crud.service';
-import { URL_API_MERCADOS, URL_API_USUARIOS } from '../../app.api';
+import { URL_API_MERCADOS, URL_API_USUARIOS_MERCADO } from '../../app.api';
 import { DataTableDirective } from 'angular-datatables';
 
 
@@ -68,7 +68,7 @@ export class UsuarioComponent implements OnInit {
 
   public buscarMercados(){
     this.crudService.get<Mercado[]>(URL_API_MERCADOS).subscribe(ret => {
-      console.log(ret)
+     
       this.mercados = ret['data'];
     }, (err) => {
       console.log(err)
@@ -76,16 +76,18 @@ export class UsuarioComponent implements OnInit {
   }
 
   public buscarUsuarios(){
-    this.crudService.get<Usuario[]>(URL_API_USUARIOS).subscribe(usuariosRet => {
+    this.crudService.get<Usuario[]>(URL_API_USUARIOS_MERCADO).subscribe(usuariosRet => {
       let usuarios = usuariosRet['data']
-      
       usuarios.forEach((usuario)=>{
         this.mercados.forEach((mercado)=>{
-          if(mercado.id == usuario.mercado){
+          
+          if(mercado.id == usuario.id_mercado){
+            
             usuario.mercadoDescricao = mercado.descricao
           }
         })
       })
+      
       this.usuarios = usuarios;
 
         //para utilização do datable dinamico
@@ -119,10 +121,10 @@ export class UsuarioComponent implements OnInit {
           if(this.formulario.value.id != null){
             usuario.id = this.formulario.value.id
             this.crudService.put<Usuario>(
-              URL_API_USUARIOS+'/'+usuario.id,
+              URL_API_USUARIOS_MERCADO+'/'+usuario.id,
               usuario
             ).subscribe(ret => {
-              console.log(ret)
+             
               this.buscarUsuarios();
             }, (err) => {
               console.log(err)
@@ -132,12 +134,12 @@ export class UsuarioComponent implements OnInit {
             if(usuario.id == null){
               delete usuario.id
             }
-            console.log(usuario)
+          
             this.crudService.post<Usuario>( 
-              URL_API_USUARIOS,
+              URL_API_USUARIOS_MERCADO,
               usuario
             ).subscribe(ret => {
-              console.log(ret)
+             
               this.buscarUsuarios();
             }, (err) => {
               console.log(err)
@@ -160,7 +162,7 @@ export class UsuarioComponent implements OnInit {
   public editarUsuario(usuario): void{
     this.formulario.controls.id.setValue(usuario.id)
     this.formulario.controls.nome.setValue(usuario.nome)    
-    this.formulario.controls.mercado.setValue(usuario.mercado) 
+    this.formulario.controls.mercado.setValue(usuario.id_mercado) 
     this.formulario.controls.cpf.setValue(usuario.cpf) 
     this.formulario.controls.rg.setValue(usuario.rg) 
     this.formulario.controls.telefone.setValue(usuario.telefone) 

@@ -20,8 +20,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     HttpClientModule,
   ],
   declarations: [
-    AdminComponent,
-    UsuarioComponent
+    AdminComponent
   ],
   providers: [
     {

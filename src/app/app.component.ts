@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataTablesModule } from 'angular-datatables';
-import { InterceptorHttp } from './services/InterceptorHttp.service'
+
 
 @Component({
   selector: 'app-root',
@@ -17,10 +17,7 @@ export class AppComponent implements OnInit {
   ){}
 
   ngOnInit() {
-    InterceptorHttp.mostrarLoading.subscribe((ret) => {
-      console.log(ret)
-      this.loading = ret;
-    });
+    
   }
 
   title = 'app';

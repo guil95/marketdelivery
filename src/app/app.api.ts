@@ -10,4 +10,6 @@ if( environment.production == true ){
 }
 
 export const URL_API_MERCADOS = URL_API+"/mercados"
-export const URL_API_USUARIOS = URL_API+"/usuarios"
+export const URL_API_USUARIOS_MERCADO = URL_API+"/usuarios-mercado"
+export const URL_API_USUARIOS_LOGIN = URL_API+"/usuarios/login"
+export const URL_API_USUARIOS_CHECK_AUTH= URL_API+"/usuarios/check-auth"

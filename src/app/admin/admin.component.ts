@@ -1,3 +1,7 @@
+import { Router } from '@angular/router';
+import { CrudService } from './../services/crud.service';
+import { URL_API_USUARIOS_CHECK_AUTH } from './../app.api';
+import { InterceptorHttp } from './../services/InterceptorHttp.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,12 +11,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminComponent implements OnInit {
 
-  constructor() { }
+  loading = false
+
+  constructor(
+    private crudService: CrudService, 
+    private router: Router) {
+    InterceptorHttp.mostrarLoading.subscribe((ret) => {
+      this.loading = ret;
+    });
+   
+   }
 
   ngOnInit() {
+ 
   }
 
   public sair(){
-    console.log('sair')
+    
+    localStorage.setItem('token','')
+    this.router.navigate(['/login'])
   }
 }
