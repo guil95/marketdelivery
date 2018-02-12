@@ -19,6 +19,10 @@ export const ROUTES: Routes = [
         loadChildren: "app/admin/admin.module#AdminModule",
         canActivate: [ AuthGuard ]
     },
+    { 
+        path: '**', 
+        loadChildren: "app/not-found/not-found.module#NotFoundModule" 
+     }
 ]
 
 
