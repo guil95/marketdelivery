@@ -95,19 +95,19 @@ export class MercadoComponent implements OnInit, AfterViewInit {
               URL_API_MERCADOS+'/'+mercado.id,
               mercado
             ).subscribe(ret => {
-              this.buscarMercados();
+              this.buscarMercados()
               // console.log(ret)
             }, (err) => {
             })
-          }else{
-            if(mercado.id == null){
-              delete mercado.id
+          } else {
+            if ( mercado.id == null ){
+               delete mercado.id
             }
             this.crudService.post<Mercado>( 
               URL_API_MERCADOS,
               mercado
             ).subscribe(ret => {
-              this.buscarMercados();
+              this.buscarMercados()
               // console.log(ret)
             }, (err) => {
 
