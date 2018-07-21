@@ -2,7 +2,7 @@ import { environment } from '../environments/environment'
 
 let URL_API = ''
 if( environment.production == true ){
-    URL_API = "https://api.marketdelivery.com.br" 
+    URL_API = "https://api.marketdelivery.com.br/v1" 
 } else {
     URL_API = "http://localhost:8765/v1" 
     // URL_API = "http://localhost:3000" 
